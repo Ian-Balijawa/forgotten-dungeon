@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=The Forgotten Dungeon
+Comment=A 3D dungeon adventure where the dungeon remembers
+Exec=forgotten-dungeon
+Terminal=false
+Categories=Game;AdventureGame;

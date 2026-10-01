@@ -1,0 +1,10 @@
+build/
+build-debug/
+.cache/
+.vscode/
+.idea/
+.DS_Store
+compile_commands.json
+*.dmg
+*.deb
+*.exe
