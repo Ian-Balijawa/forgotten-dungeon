@@ -5,15 +5,24 @@
 #include "rendering/Renderer.hpp"
 #include "world/World.hpp"
 
-enum class GameState { Menu, Playing, Paused, Dead, Won };
+enum class GameState
+{
+  Menu,
+  Playing,
+  Paused,
+  Dead,
+  Won
+};
 
-class Game {
- public:
+class Game
+{
+public:
   Game();
   void run();
 
- private:
-  struct WindowGuard {  // must be constructed first / destroyed last
+private:
+  struct WindowGuard
+  { // must be constructed first / destroyed last
     WindowGuard();
     ~WindowGuard();
   } window_;

@@ -6,19 +6,27 @@
 
 #include "core/Config.hpp"
 
-enum class Tile : unsigned char { Floor, Wall, Door, Gate };
+enum class Tile : unsigned char
+{
+  Floor,
+  Wall,
+  Door,
+  Gate
+};
 
 // Grid-based level. Legend:  # wall  . floor  P start  E skeleton  K key  H potion
 //                            D locked door  G gate (opens via plate)  S pushable block
 //                            T pressure plate  A ancient artifact (goal)
-class Dungeon {
- public:
-  struct Spawns {
+class Dungeon
+{
+public:
+  struct Spawns
+  {
     Vector3 player{};
     std::vector<Vector3> enemies, keys, potions, artifacts, blocks, plates;
   };
 
-  void load(const std::vector<std::string>& rows);
+  void load(const std::vector<std::string> &rows);
   int width() const { return width_; }
   int depth() const { return depth_; }
   Tile tile(int cx, int cz) const;
@@ -32,9 +40,9 @@ class Dungeon {
   bool doorsOpen = false;
   bool gatesOpen = false;
   Spawns spawns;
-  std::vector<Vector3> doors;  // centres of locked doors
+  std::vector<Vector3> doors; // centres of locked doors
 
- private:
+private:
   int width_ = 0, depth_ = 0;
   std::vector<Tile> tiles_;
 };

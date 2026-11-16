@@ -4,8 +4,9 @@
 
 #include "rlgl.h"
 
-namespace {
-const char* kVertex = R"GLSL(#version 330
+namespace
+{
+  const char *kVertex = R"GLSL(#version 330
 in vec3 vertexPosition;
 in vec2 vertexTexCoord;
 in vec3 vertexNormal;
@@ -26,7 +27,7 @@ void main() {
 }
 )GLSL";
 
-const char* kFragment = R"GLSL(#version 330
+  const char *kFragment = R"GLSL(#version 330
 in vec3 fragPosition;
 in vec2 fragTexCoord;
 in vec4 fragColor;
@@ -60,12 +61,13 @@ void main() {
 }
 )GLSL";
 
-void setVec3(const Shader& s, int loc, Vector3 v) { SetShaderValue(s, loc, &v, SHADER_UNIFORM_VEC3); }
-void setFloat(const Shader& s, int loc, float v) { SetShaderValue(s, loc, &v, SHADER_UNIFORM_FLOAT); }
-void setInt(const Shader& s, int loc, int v) { SetShaderValue(s, loc, &v, SHADER_UNIFORM_INT); }
-}  // namespace
+  void setVec3(const Shader &s, int loc, Vector3 v) { SetShaderValue(s, loc, &v, SHADER_UNIFORM_VEC3); }
+  void setFloat(const Shader &s, int loc, float v) { SetShaderValue(s, loc, &v, SHADER_UNIFORM_FLOAT); }
+  void setInt(const Shader &s, int loc, int v) { SetShaderValue(s, loc, &v, SHADER_UNIFORM_INT); }
+} // namespace
 
-Lighting::Lighting() {
+Lighting::Lighting()
+{
   shader_ = LoadShaderFromMemory(kVertex, kFragment);
   locView_ = GetShaderLocation(shader_, "viewPos");
   locTorch_ = GetShaderLocation(shader_, "torchPos");
@@ -80,7 +82,8 @@ Lighting::Lighting() {
 
 Lighting::~Lighting() { UnloadShader(shader_); }
 
-void Lighting::update(Vector3 cameraPos, Vector3 torchPos, bool torchOn, float t) {
+void Lighting::update(Vector3 cameraPos, Vector3 torchPos, bool torchOn, float t)
+{
   const float flicker = 1.f + 0.07f * std::sin(t * 13.f) + 0.05f * std::sin(t * 27.f + 1.f) + 0.03f * std::sin(t * 51.f);
   setVec3(shader_, locView_, cameraPos);
   setVec3(shader_, locTorch_, torchPos);
@@ -93,12 +96,14 @@ void Lighting::update(Vector3 cameraPos, Vector3 torchPos, bool torchOn, float t
   setFloat(shader_, locEmissive_, 0.f);
 }
 
-void Lighting::setModelMode(bool on) {
-  rlDrawRenderBatchActive();  // flush pending shapes before the uniform changes
+void Lighting::setModelMode(bool on)
+{
+  rlDrawRenderBatchActive(); // flush pending shapes before the uniform changes
   setInt(shader_, locModelMode_, on ? 1 : 0);
 }
 
-void Lighting::setEmissive(float v) {
+void Lighting::setEmissive(float v)
+{
   rlDrawRenderBatchActive();
   setFloat(shader_, locEmissive_, v);
 }
